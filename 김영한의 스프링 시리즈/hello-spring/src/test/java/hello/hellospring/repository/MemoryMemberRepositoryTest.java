@@ -10,7 +10,7 @@ import org.junit.jupiter.api.Test;
 import hello.hellospring.domain.Member;
 
 class MemoryMemberRepositoryTest {
-	MemberRepository memberRepository = new MemoryMemberRepository();
+	MemoryMemberRepository memberRepository = new MemoryMemberRepository();
 
 	// 테스트 간의 독립성을 위해 저장소 초기화
 	@AfterEach

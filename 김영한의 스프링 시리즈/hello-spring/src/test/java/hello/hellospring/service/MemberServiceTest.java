@@ -8,12 +8,11 @@ import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import hello.hellospring.domain.Member;
-import hello.hellospring.repository.MemberRepository;
 import hello.hellospring.repository.MemoryMemberRepository;
 
 class MemberServiceTest {
 	private MemberService memberService;
-	private MemberRepository memberRepository;
+	private MemoryMemberRepository memberRepository;
 
 	// 의존성 주입
 	@BeforeEach
