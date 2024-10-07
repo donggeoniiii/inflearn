@@ -2,16 +2,24 @@ package hello.core.order;
 
 import static org.assertj.core.api.Assertions.*;
 
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import hello.AppConfig;
 import hello.core.member.Grade;
 import hello.core.member.Member;
 import hello.core.member.MemberService;
-import hello.core.member.MemberServiceImpl;
 
 class OrderServiceTest {
-	private final MemberService memberService = new MemberServiceImpl();
-	private final OrderService orderService = new OrderServiceImpl();
+	MemberService memberService;
+	OrderService orderService;
+
+	@BeforeEach
+	void setUp() {
+		AppConfig appConfig = new AppConfig();
+		memberService = appConfig.memberService();
+		orderService = appConfig.orderService();
+	}
 
 	@Test
 	void createOrder() {
@@ -24,6 +32,6 @@ class OrderServiceTest {
 		Order order = orderService.createOrder(memberId, "RTX 3080Ti", 490_000);
 
 		// then
-		assertThat(order.getDiscountPrice()).isEqualTo(1000);
+		assertThat(order.getDiscountPrice()).isEqualTo(49000);
 	}
 }
