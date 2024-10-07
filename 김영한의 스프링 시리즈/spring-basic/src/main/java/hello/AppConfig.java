@@ -1,5 +1,8 @@
 package hello;
 
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+
 import hello.core.discount.DiscountPolicy;
 import hello.core.discount.RateDiscountPolicy;
 import hello.core.member.MemberRepository;
@@ -10,14 +13,17 @@ import hello.core.order.OrderService;
 import hello.core.order.OrderServiceImpl;
 
 // DI 컨테이너: 외부에서 의존관계 주입 -> 서비스 코드는 추상화에만 의존, 관심사 분리됨
+@Configuration // 애플리케이션 설정 정보를 저장하는 파일
 public class AppConfig {
 
+	@Bean // 해당 메서드가 반환하는 객체가 스프링 빈으로 스프링 컨테이너에 등록될 예정
 	public MemberService memberService() {
 		return new MemberServiceImpl(
 			memberRepository()
 		);
 	}
 
+	@Bean
 	public OrderService orderService() {
 		return new OrderServiceImpl(
 			memberRepository(),
@@ -26,10 +32,12 @@ public class AppConfig {
 	}
 
 	// 메서드 분리 -> 중복 제거 및 변경시 수정할 부분 최소화, 역할에 따른 구현 클래스가 잘 보임
+	@Bean
 	public MemberRepository memberRepository() {
 		return new MemoryMemberRepository();
 	}
 
+	@Bean
 	public DiscountPolicy discountPolicy() {
 		return new RateDiscountPolicy();
 	}
