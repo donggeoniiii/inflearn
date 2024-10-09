@@ -37,8 +37,8 @@ public class ApplicationContextExtendFindTest {
 	@Test
 	@DisplayName("구현 타입으로 조회한다")
 	void findBeanByChildType() {
-		RateDiscountPolicy discountPolicy = ac.getBean(RateDiscountPolicy.class);
-		assertThat(discountPolicy).isInstanceOf(FixDiscountPolicy.class);
+		DiscountPolicy discountPolicy = ac.getBean(RateDiscountPolicy.class);
+		assertThat(discountPolicy).isInstanceOf(RateDiscountPolicy.class);
 	}
 
 	@Test
