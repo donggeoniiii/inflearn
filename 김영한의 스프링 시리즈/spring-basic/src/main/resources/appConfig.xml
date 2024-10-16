@@ -17,9 +17,9 @@
         <constructor-arg name="memberRepository"
                          ref="memberRepository" />
         <constructor-arg name="discountPolicy"
-                         ref="discountPolicy" />
+                         ref="rateDiscountPolicy" />
     </bean>
 
-    <bean id="discountPolicy"
+    <bean id="rateDiscountPolicy"
           class="hello.core.discount.RateDiscountPolicy" />
 </beans>

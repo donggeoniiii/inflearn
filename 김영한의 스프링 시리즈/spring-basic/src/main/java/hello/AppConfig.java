@@ -41,4 +41,8 @@ public class AppConfig {
 	public DiscountPolicy discountPolicy() {
 		return new RateDiscountPolicy();
 	}
+
+	// 이런 수동 빈 등록은 공통 관심사로 개발되는 기술 지원 로직들에 적합하다.
+	// 수동 빈 등록은 의존 관계를 명확하게 드러내는 것이 장점임을 명심하자!
+	// 의존관계가 복잡한 비즈니스 로직은 컴포넌트(스캔) 어노테이션을 활용한 자동 빈 등록을 애용하자
 }
