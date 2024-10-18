@@ -28,6 +28,12 @@ repositories {
 dependencies {
     implementation 'org.springframework.boot:spring-boot-starter'
 
+    // spring web
+    implementation 'org.springframework.boot:spring-boot-starter-web'
+
+    // dependency lookup
+    implementation 'jakarta.inject:jakarta.inject-api:2.0.1'
+
     // lombok
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'
