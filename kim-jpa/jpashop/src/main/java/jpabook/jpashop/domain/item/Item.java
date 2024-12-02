@@ -14,11 +14,12 @@ import jakarta.persistence.ManyToMany;
 import jpabook.jpashop.domain.Category;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
+import lombok.Setter;
 
 @Entity
 @Inheritance(strategy = InheritanceType.SINGLE_TABLE)
 @DiscriminatorColumn(name = "dtype") // 기본값이 DTYPE
-@Getter
+@Getter @Setter
 public abstract class Item {
 
 	@Id @GeneratedValue

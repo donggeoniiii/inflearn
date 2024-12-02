@@ -1,13 +1,13 @@
 package jpabook.jpashop.service;
 
 import static org.assertj.core.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.*;
 
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
-import jakarta.persistence.EntityManager;
 import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.repository.MemberRepository;
 
@@ -20,9 +20,6 @@ class MemberServiceTest {
 
 	@Autowired
 	MemberRepository memberRepository;
-
-	@Autowired
-	EntityManager em;
 
 	@Test
 	void 회원가입() {
@@ -48,6 +45,6 @@ class MemberServiceTest {
 
 		// when - throws exception
 		memberService.join(member);
-		assertThatThrownBy(() -> memberService.join(duplicatedMember));
+		assertThrows(IllegalStateException.class, () -> memberService.join(duplicatedMember));
 	}
 }
