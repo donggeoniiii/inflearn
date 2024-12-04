@@ -14,13 +14,7 @@ public class ItemRepository {
 
 	private final EntityManager em;
 
-	public void save(Item item) {
-		if (item.getId() == null) {
-			em.persist(item);
-		} else { // 이미 등록된 아이템인 경우 업데이트
-			em.merge(item);
-		}
-	}
+	public void save(Item item) { em.persist(item); }
 
 	public Item findOne(Long id) {
 		return em.find(Item.class, id);

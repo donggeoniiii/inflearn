@@ -1,6 +1,7 @@
 package jpabook.jpashop.service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -10,6 +11,7 @@ import jpabook.jpashop.domain.Member;
 import jpabook.jpashop.domain.Order;
 import jpabook.jpashop.domain.OrderItem;
 import jpabook.jpashop.domain.item.Item;
+import jpabook.jpashop.dto.OrderView;
 import jpabook.jpashop.repository.ItemRepository;
 import jpabook.jpashop.repository.MemberRepository;
 import jpabook.jpashop.repository.OrderRepository;
@@ -57,7 +59,9 @@ public class OrderService {
 	}
 
 	// 검색
-	public List<Order> findOrders(OrderSearch search) {
-		return orderRepository.findAllByCriteria(search);
+	public List<OrderView> findOrders(OrderSearch search) {
+		return orderRepository.findAllByCriteria(search).stream()
+			.map(Order::toView)
+			.collect(Collectors.toList());
 	}
 }

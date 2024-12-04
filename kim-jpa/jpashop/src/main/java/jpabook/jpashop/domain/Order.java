@@ -18,6 +18,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
+import jpabook.jpashop.dto.OrderView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -103,5 +104,17 @@ public class Order {
 		return orderItems.stream()
 			.mapToInt(OrderItem::getTotalPrice)
 			.sum();
+	}
+
+	// == to Dto == //
+	public OrderView toView() {
+		OrderView orderView = new OrderView();
+		orderView.setId(id);
+		orderView.setMember(member);
+		orderView.setOrderItems(orderItems);
+		orderView.setStatus(status);
+		orderView.setOrderTime(orderTime);
+
+		return orderView;
 	}
 }

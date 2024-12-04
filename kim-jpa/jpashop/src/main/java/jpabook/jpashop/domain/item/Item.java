@@ -12,6 +12,7 @@ import jakarta.persistence.Inheritance;
 import jakarta.persistence.InheritanceType;
 import jakarta.persistence.ManyToMany;
 import jpabook.jpashop.domain.Category;
+import jpabook.jpashop.dto.ItemView;
 import jpabook.jpashop.exception.NotEnoughStockException;
 import lombok.Getter;
 import lombok.Setter;
@@ -36,7 +37,6 @@ public abstract class Item {
 	private List<Category> categories = new ArrayList<>();
 
 	// == 비즈니스 로직 == //
-
 	/**
 	 * 수량 증가
 	 * @param quantity 증가량
@@ -55,5 +55,31 @@ public abstract class Item {
 			throw new NotEnoughStockException("재고 없음");
 		}
 		this.stock -= quantity;
+	}
+
+	/**
+	 * 상품 재고 수정
+	 * @param quantity 변경 재고량
+	 */
+	public void updateStock(int quantity) {
+		stock = quantity;
+	}
+
+	/**
+	 * 상품 가격 수정
+	 */
+	public void updatePrice(int price) {
+		this.price = price;
+	}
+
+	// == to Dto == //
+	public ItemView toView() {
+		ItemView itemView = new ItemView();
+		itemView.setId(id);
+		itemView.setName(name);
+		itemView.setPrice(price);
+		itemView.setStock(stock);
+
+		return itemView;
 	}
 }

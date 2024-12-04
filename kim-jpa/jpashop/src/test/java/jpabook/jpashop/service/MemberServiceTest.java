@@ -9,6 +9,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.transaction.annotation.Transactional;
 
 import jpabook.jpashop.domain.Member;
+import jpabook.jpashop.dto.MemberForm;
 import jpabook.jpashop.repository.MemberRepository;
 
 @SpringBootTest
@@ -24,27 +25,28 @@ class MemberServiceTest {
 	@Test
 	void 회원가입() {
 		// given
-		Member member = new Member();
-		member.setName("test");
+		MemberForm memberForm = new MemberForm();
+		memberForm.setName("test");
 
 		// when
-		Long savedId = memberService.join(member);
+		Long savedId = memberService.join(memberForm);
 
 		// then
-		assertThat(savedId).isEqualTo(member.getId());
-		assertThat(memberRepository.findOne(savedId)).isEqualTo(member);
+		Member member = memberRepository.findOne(savedId);
+		assertThat(member.getName()).isEqualTo("test");
 	}
 
 	@Test
 	void 중복_회원_예외() {
 		// given
-		Member member = new Member();
-		member.setName("test");
-		Member duplicatedMember = new Member();
-		duplicatedMember.setName("test");
+		MemberForm memberForm = new MemberForm();
+		memberForm.setName("test");
+
+		MemberForm duplicatedForm = new MemberForm();
+		duplicatedForm.setName("test");
 
 		// when - throws exception
-		memberService.join(member);
-		assertThrows(IllegalStateException.class, () -> memberService.join(duplicatedMember));
+		memberService.join(memberForm);
+		assertThrows(IllegalStateException.class, () -> memberService.join(duplicatedForm));
 	}
 }

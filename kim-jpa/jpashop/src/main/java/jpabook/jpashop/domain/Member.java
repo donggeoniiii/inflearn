@@ -9,6 +9,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
+import jpabook.jpashop.dto.MemberForm;
+import jpabook.jpashop.dto.MemberView;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -27,4 +29,24 @@ public class Member {
 	// mappedBy 설정을 통해 order에 있는 member 필드의 거울임을 표시
 	@OneToMany(mappedBy = "member")
 	private List<Order> orders = new ArrayList<>(); // 컬렉션은 필드에서 초기화하는게 베스트 프랙티스
+
+	// == 생성 메서드 == //
+	public static Member createMember(MemberForm memberForm) {
+		Member member = new Member();
+		member.setName(memberForm.getName());
+
+		Address address = new Address(memberForm.getCity(), memberForm.getStreet(), memberForm.getZipcode());
+		member.setAddress(address);
+
+		return member;
+	}
+
+	// == to dto == //
+	public MemberView toView() {
+		MemberView memberView = new MemberView();
+		memberView.setId(id);
+		memberView.setName(name);
+		memberView.setAddress(address);
+		return memberView;
+	}
 }
