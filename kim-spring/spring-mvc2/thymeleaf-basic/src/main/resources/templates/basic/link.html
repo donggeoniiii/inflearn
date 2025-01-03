@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <title>Title</title>
+</head>
+<body>
+<h1>URL 링크</h1>
+<ul>
+  <!-- /hello -->
+  <li><a th:href="@{/hello}">기본 URI 표현</a></li>
+
+  <!-- /hello?param1=data1&param2=data2 -->
+  <li><a th:href="@{/hello(param1=${param1}, param2=${param2})}">쿼리 파라미터에 추가</a></li>
+
+  <!-- /hello/data1/data2 -->
+  <li><a th:href="@{/hello/{param1}/{param2}(param1=${param1}, param2=${param2})}">경로 변수(path variable) 입력</a></li>
+
+  <!-- /hello/data1?param2=data2 -->
+  <li><a th:href="@{/hello/{param1}(param1=${param1}, param2=${param2})}">경로 변수 + 쿼리 파라미터 사용</a></li>
+</ul>
+</body>
+</html>

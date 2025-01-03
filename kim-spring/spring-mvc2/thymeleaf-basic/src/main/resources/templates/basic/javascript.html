@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    <!-- 자바스크립트 인라인 사용 전 -->
+    <script>
+        var username = [[${user.username}]]; // userA (따옴표 빠짐, 문자 userA가 아님 -> Uncaught Reference)
+        var age = [[${user.age}]]; // 10 (따옴표 없어도 되는 숫자 리터럴)
+
+        // 자바스크립트 내추럴 템플릿
+        var username2 = /*[[${user.username}]]*/ "test username"; // /*userA*/ "test username" (그대로 나옴)
+
+        // 객체
+        var user = [[${user}]]; // BasicController.User(username=userA, age=10)
+    </script>
+    <!-- 자바스크립트 인라인 사용 후 -->
+    <script th:inline="javascript">
+        var username = [[${user.username}]]; // "userA"
+        var age = [[${user.age}]]; // 10
+
+        // 자바스크립트 내추럴 템플릿
+        var username2 = /*[[${user.username}]]*/ "test username"; // "userA" (렌더링이 되는 경우 해당 부분을 출력시켜 줌)
+
+        // 객체
+        var user = [[${user}]]; // {"username":"userA","age":10} (자스에서 사용 가능한 JSON 포맷으로 반환)
+    </script>
+    <!-- 자바스크립트 인라인 each -->
+    <script th:inline="javascript">
+        // 2번째 파라미터 생략 불가
+        [# th:each="user, stat : ${users}"]
+        var user[[${stat.count}]] = [[${user}]];
+        [/]
+    </script>
+    </body>
+</html>

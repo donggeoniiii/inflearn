@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>속성 설정</h1>
+    <!-- 렌더링되면 th:* 태그의 값이 * 태그의 값으로 사용됨 -->
+    <input type="text" name="mock" th:name="${data}" />
+<h1>속성 추가</h1>
+    <!-- class = "textlarge" -->
+    - th:attrappend = <input type="text" class="text" th:attrappend="class='large'" /><br/>
+
+    <!-- class = "textlarge" -->
+    - th:attrprepend = <input type="text" class="text" th:attrprepend="class='large'" /><br/>
+
+    <!-- class = "text large" -->
+    - th:classappend = <input type="text" class="text" th:classappend="large" /><br/>
+<h1>checked 처리</h1>
+    <!-- html의 checked는 속성값이 뭐든지 속성이 있기만 하면 체크표시 -->
+    <!-- th:checked는 진위 조절 가능(존재하는 이유) -->
+    - checked o <input type="checkbox" name="active" th:checked="${isChecked}" /><br/>
+    - checked x <input type="checkbox" name="active" th:checked="${!isChecked}" /><br/>
+    - checked=false <input type="checkbox" name="active" checked="false" /><br/>
+</body>
+</html>

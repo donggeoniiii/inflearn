@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<h1>리터럴</h1>
+<ul>
+    <!-- 다음 주석을 풀면 예외가 발생함 -->
+    <!-- <li>"hello world!" = <span th:text="hello world!"></span></li>-->
+
+    <!-- 문자 리터럴은 ''로 감싸는게 원칙, 공백이 없는 경우 예외적으로 '' 없이도 허용 -->
+    <li>'hello' + ' world!' = <span th:text="'hello' + ' world!'"></span></li>
+    <li>'hello world!' = <span th:text="'hello world!'"></span></li>
+    <li>'hello ' + ${data} = <span th:text="'hello ' + ${data}"></span></li>
+
+    <!-- 리터럴 대체 문법 || -->
+    <li>리터럴 대체 |hello ${data}| = <span th:text="|hello ${data}|"></span></li>
+</ul>
+</body>
+</html>
