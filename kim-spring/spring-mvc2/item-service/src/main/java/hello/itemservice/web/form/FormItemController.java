@@ -2,6 +2,7 @@ package hello.itemservice.web.form;
 
 import hello.itemservice.domain.item.DeliveryCode;
 import hello.itemservice.domain.item.Item;
+import hello.itemservice.domain.item.ItemAttribute;
 import hello.itemservice.domain.item.ItemRepository;
 import hello.itemservice.domain.item.ItemType;
 import lombok.RequiredArgsConstructor;
@@ -12,8 +13,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -25,31 +24,22 @@ public class FormItemController {
 
     private final ItemRepository itemRepository;
 
+    private final ItemAttribute itemAttribute = ItemAttribute.getInstance();
+
     // 해당 컨트롤러 요청 시 자동으로 model에 attribute로 담김
     @ModelAttribute("regions")
     private Map<String, String> regions() {
-        // 순서 보장을 위해 linkedHashMap 사용
-        Map<String, String> regions = new LinkedHashMap<>();
-        regions.put("SEOUL", "서울");
-        regions.put("BUSAN", "부산");
-        regions.put("JEJU", "제주");
-
-        return regions;
+        return itemAttribute.getRegions();
     }
 
     @ModelAttribute("itemTypes")
     private ItemType[] itemTypes() {
-        return ItemType.values();
+        return itemAttribute.getItemTypes();
     }
 
     @ModelAttribute("deliveryCodes")
     private List<DeliveryCode> deliveryCodes() {
-        List<DeliveryCode> deliveryCodes = new ArrayList<>();
-        deliveryCodes.add(new DeliveryCode("FAST", "빠른 배송"));
-        deliveryCodes.add(new DeliveryCode("NORMAL", "일반 배송"));
-        deliveryCodes.add(new DeliveryCode("SLOW", "느린 배송"));
-
-        return deliveryCodes;
+        return itemAttribute.getDeliveryCodes();
     }
 
     @GetMapping
