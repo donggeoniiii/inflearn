@@ -3,10 +3,14 @@
 <head>
     <meta charset="utf-8">
     <link th:href="@{/css/bootstrap.min.css}"
-          href="../css/bootstrap.min.css" rel="stylesheet">
+          href="../../css/bootstrap.min.css" rel="stylesheet">
     <style>
         .container {
             max-width: 560px;
+        }
+        .field-error {
+            border-color: #dc3545;
+            color: #dc3545;
         }
     </style>
 </head>
@@ -15,34 +19,50 @@
 <div class="container">
 
     <div class="py-5 text-center">
-        <h2 th:text="#{page.addItem}">상품 등록</h2>
+        <h2 th:text="#{page.addItem}"/>
     </div>
 
     <form action="item.html" th:action th:object="${item}" method="post">
+        <div th:if="${errors?.containsKey('globalError')}">
+            <p class="field-error" th:text="${errors['globalError']}"/>
+        </div>
+
         <div>
-            <label for="itemName" th:text="#{label.item.itemName}">상품명</label>
-            <input type="text" id="itemName" th:field="*{itemName}" class="form-control" placeholder="이름을 입력하세요">
+            <label for="itemName" th:text="#{label.item.itemName}"/>
+            <input type="text" id="itemName" th:field="*{itemName}"
+                   th:classappend="${errors?.containsKey('itemName')} ? 'field-error' : _"
+                   class="form-control"
+                   placeholder="이름을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('itemName')}" th:text="${errors['itemName']}"/>
         </div>
         <div>
-            <label for="price" th:text="#{label.item.price}">가격</label>
-            <input type="text" id="price" th:field="*{price}" class="form-control" placeholder="가격을 입력하세요">
+            <label for="price" th:text="#{label.item.price}"/>
+            <input type="text" id="price" th:field="*{price}"
+                   th:classappend="${errors?.containsKey('price')} ? 'field-error' : _"
+                   class="form-control"
+                   placeholder="가격을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('price')}" th:text="${errors['price']}"/>
         </div>
         <div>
-            <label for="quantity" th:text="#{label.item.quantity}">수량</label>
-            <input type="text" id="quantity" th:field="*{quantity}" class="form-control" placeholder="수량을 입력하세요">
+            <label for="quantity" th:text="#{label.item.quantity}"/>
+            <input type="text" id="quantity" th:field="*{quantity}"
+                   th:classappend="${errors?.containsKey('quantity')} ? 'field-error' : _"
+                   class="form-control"
+                   placeholder="수량을 입력하세요">
+            <div class="field-error" th:if="${errors?.containsKey('quantity')}" th:text="${errors['quantity']}"/>
         </div>
 
         <hr class="my-4">
 
         <div class="row">
             <div class="col">
-                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}">상품 등록</button>
+                <button class="w-100 btn btn-primary btn-lg" type="submit" th:text="#{button.save}"/>
             </div>
             <div class="col">
                 <button class="w-100 btn btn-secondary btn-lg"
                         onclick="location.href='items.html'"
                         th:onclick="|location.href='@{/validation/v1/items}'|"
-                        type="button" th:text="#{button.cancel}">취소</button>
+                        type="button" th:text="#{button.cancel}"/>
             </div>
         </div>
 
