@@ -53,8 +53,9 @@ public class MessageItemController {
     }
 
     @PostMapping("/{itemId}/edit")
-    public String edit(@PathVariable Long itemId, @ModelAttribute Item item) {
+    public String edit(@PathVariable Long itemId, @ModelAttribute Item item, RedirectAttributes redirectAttributes) {
         itemRepository.update(itemId, item);
+        redirectAttributes.addAttribute("status", true);
         return "redirect:/message/items/{itemId}";
     }
 
