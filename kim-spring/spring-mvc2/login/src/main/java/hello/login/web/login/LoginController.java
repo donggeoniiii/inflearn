@@ -5,6 +5,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import hello.login.domain.login.LoginService;
 import hello.login.domain.member.Member;
@@ -81,7 +82,7 @@ public class LoginController {
 		return "redirect:/";
 	}
 
-	@PostMapping("/login")
+	// @PostMapping("/login")
 	public String loginV3(@ModelAttribute LoginForm loginForm,
 		BindingResult bindingResult, HttpServletRequest request) {
 
@@ -106,6 +107,34 @@ public class LoginController {
 		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
 
 		return "redirect:/";
+	}
+
+	@PostMapping("/login")
+	public String loginV4(@ModelAttribute LoginForm loginForm,
+		BindingResult bindingResult, @RequestParam(defaultValue = "/") String redirectURL,
+		HttpServletRequest request) {
+
+		// 로그인 폼에 바인딩조차 안되는 경우 다시 보내기
+		if (bindingResult.hasErrors()) {
+			return "login/loginForm";
+		}
+
+		// 폼 정보로 로그인 시도
+		Member loginMember = loginService.login(loginForm.getLoginId(),
+			loginForm.getPassword());
+		log.info("loginMember = {}", loginMember);
+
+		// 만약 해당 로그인 정보가 없으면 실패처리
+		if (loginMember == null) {
+			bindingResult.reject("login.failure");
+			return "login/loginForm";
+		}
+
+		// 로그인 성공 처리, 세션 id db에 저장
+		HttpSession session = request.getSession(); // 세션이 없으면 생성, 이미 있으면 가져오기
+		session.setAttribute(SessionConst.LOGIN_MEMBER, loginMember);
+
+		return "redirect:" + redirectURL;
 	}
 
 	// @PostMapping("/logout")
